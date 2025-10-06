@@ -1,102 +1,816 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auréliya Sovereign AI System</title>
-  <link rel="icon" href="favicon.ico" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #432889, #9e85d4);
-      color: white;
-    }
-    .vercel-header {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      background: rgba(0,0,0,0.3);
-      padding: 12px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 10;
-    }
-    .vercel-header button {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .vercel-home {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding-top: 60px;
-    }
-    .gold-halo {
-      width: 200px;
-      height: 200px;
-      border: 4px solid gold;
-      border-radius: 50%;
-      margin: 20px;
-      box-shadow: 0 0 20px gold;
-    }
-    .welcome-text {
-      font-size: 2rem;
-      margin: 20px 0;
-    }
-    .module-icons {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .module-icons button {
-      background: rgba(255,255,255,0.1);
-      border: none;
-      padding: 12px 18px;
-      border-radius: 10px;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .module-icons button:hover {
-      background: rgba(255,255,255,0.25);
-    }
-  </style>
-</head>
-<body>
-  <div class="vercel-header">
-    <button onclick="navigateTo('home')">🏠 Home</button>
-    <button onclick="navigateTo('modules')">🧩 Modules</button>
-    <button onclick="navigateTo('trust')">🔐 Trust</button>
-    <button onclick="navigateTo('settings')">⚙️ Settings</button>
-    <button onclick="navigateTo('files')">📁 Files</button>
-  </div>
-
-  <div class="vercel-home">
-    <div class="gold-halo"></div>
-    <h1 class="welcome-text">Welcome back, Sabrina ✨</h1>
-
-    <div class="module-icons">
-      <button onclick="navigateTo('trust')">🔐 TrustOS</button>
-      <button onclick="navigateTo('sovereign')">💰 SovereignWealth</button>
-      <button onclick="navigateTo('mirror')">🪞 MirrorMe</button>
-      <button onclick="navigateTo('boardroom')">🏛️ Boardroom Access</button>
-      <button onclick="navigateTo('air')">✈️ Auréliya Air</button>
-    </div>
-  </div>
-
-  <script>
-    function navigateTo(target) {
-      alert("Navigating to " + target + " (placeholder).");
-      // You can later replace this with real module router logic
-    }
-  </script>
-</body>
-</html>
+export default {
+  id: "01-trustos",
+  name: "TrustOS",
+  async render(el){
+    el.innerHTML = `<div class="card">
+      <h2>🔐 TrustOS</h2>
+      <p>This module checks server time via <code>/api/time</code>.</p>
+      <button id="btnTime">Get Server Time</button>
+      <pre id="out">Click the button…</pre>
+      <button id="backToModules">↩ Back to Modules</button>
+    </div>`;
+    el.querySelector('#btnTime').onclick = async ()=>{
+      try{
+        const r = await fetch('/api/time');
+        const j = await r.json();
+        el.querySelector('#out').textContent = JSON.stringify(j, null, 2);
+      }catch(e){ el.querySelector('#out').textContent = String(e); }
+    };
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "02-sovereignwealth",
+  name: "SovereignWealth",
+  async render(el){
+    el.innerHTML = `<div class="card">
+      <h2>💰 SovereignWealth</h2>
+      <p>Connectivity test via <code>/api/ping</code>.</p>
+      <button id="btnPing">Ping</button>
+      <pre id="out">Click Ping…</pre>
+      <button id="backToModules">↩ Back to Modules</button>
+    </div>`;
+    el.querySelector('#btnPing').onclick = async ()=>{
+      try{
+        const r = await fetch('/api/ping');
+        const j = await r.json();
+        el.querySelector('#out').textContent = JSON.stringify(j, null, 2);
+      }catch(e){ el.querySelector('#out').textContent = String(e); }
+    };
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "03-mirrorme",
+  name: "MirrorMe",
+  async render(el){
+    el.innerHTML = `<div class="card">
+      <h2>🪞 MirrorMe</h2>
+      <p>Sends JSON to <code>/api/echo</code> and shows the reply.</p>
+      <textarea id="payload" rows="5" style="width:100%">{ "hello": "Sabrina", "module": "MirrorMe" }</textarea>
+      <button id="btnEcho">Send</button>
+      <pre id="out">Type JSON and click Send…</pre>
+      <button id="backToModules">↩ Back to Modules</button>
+    </div>`;
+    el.querySelector('#btnEcho').onclick = async ()=>{
+      try{
+        const body = el.querySelector('#payload').value;
+        const r = await fetch('/api/echo', { method: 'POST', headers: {'Content-Type':'application/json'}, body });
+        const j = await r.json();
+        el.querySelector('#out').textContent = JSON.stringify(j, null, 2);
+      }catch(e){ el.querySelector('#out').textContent = String(e); }
+    };
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "04-boardroomaccess",
+  name: "Boardroom Access",
+  async render(el){
+    el.innerHTML = `<div class="card">
+      <h2>🏛️ Boardroom Access</h2>
+      <p>Calls <code>/api/openai</code>. If <code>OPENAI_API_KEY</code> isn't set in Vercel, you'll see a safe mock reply.</p>
+      <input id="prompt" placeholder="Prompt" value="Draft a 1‑sentence greeting for Auréliya Holdings." style="width:100%;padding:8px"/>
+      <button id="btnGo">Run</button>
+      <pre id="out">Enter a prompt and click Run…</pre>
+      <button id="backToModules">↩ Back to Modules</button>
+    </div>`;
+    el.querySelector('#btnGo').onclick = async ()=>{
+      try{
+        const prompt = el.querySelector('#prompt').value;
+        const r = await fetch('/api/openai', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({prompt}) });
+        const j = await r.json();
+        el.querySelector('#out').textContent = JSON.stringify(j, null, 2);
+      }catch(e){ el.querySelector('#out').textContent = String(e); }
+    };
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "05-aureliyaair",
+  name: "Auréliya Air",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>✈️ Auréliya Air</h2>
+        <p><small>ID: 05-aureliyaair</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "06-quantumincomerouter",
+  name: "Quantum Income Router",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>💠 Quantum Income Router</h2>
+        <p><small>ID: 06-quantumincomerouter</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "07-legaladvisor",
+  name: "Legal Advisor",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>📜 Legal Advisor</h2>
+        <p><small>ID: 07-legaladvisor</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "08-module08",
+  name: "Module 08",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 08</h2>
+        <p><small>ID: 08-module08</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "09-module09",
+  name: "Module 09",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 09</h2>
+        <p><small>ID: 09-module09</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "10-module10",
+  name: "Module 10",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 10</h2>
+        <p><small>ID: 10-module10</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "11-module11",
+  name: "Module 11",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 11</h2>
+        <p><small>ID: 11-module11</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "12-module12",
+  name: "Module 12",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 12</h2>
+        <p><small>ID: 12-module12</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "13-module13",
+  name: "Module 13",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 13</h2>
+        <p><small>ID: 13-module13</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "14-module14",
+  name: "Module 14",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 14</h2>
+        <p><small>ID: 14-module14</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "15-module15",
+  name: "Module 15",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 15</h2>
+        <p><small>ID: 15-module15</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "16-module16",
+  name: "Module 16",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 16</h2>
+        <p><small>ID: 16-module16</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "17-module17",
+  name: "Module 17",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 17</h2>
+        <p><small>ID: 17-module17</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "18-module18",
+  name: "Module 18",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 18</h2>
+        <p><small>ID: 18-module18</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "19-module19",
+  name: "Module 19",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 19</h2>
+        <p><small>ID: 19-module19</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "20-module20",
+  name: "Module 20",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 20</h2>
+        <p><small>ID: 20-module20</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "21-module21",
+  name: "Module 21",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 21</h2>
+        <p><small>ID: 21-module21</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "22-module22",
+  name: "Module 22",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 22</h2>
+        <p><small>ID: 22-module22</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "23-module23",
+  name: "Module 23",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 23</h2>
+        <p><small>ID: 23-module23</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "24-module24",
+  name: "Module 24",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 24</h2>
+        <p><small>ID: 24-module24</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "25-module25",
+  name: "Module 25",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 25</h2>
+        <p><small>ID: 25-module25</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "26-module26",
+  name: "Module 26",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 26</h2>
+        <p><small>ID: 26-module26</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "27-module27",
+  name: "Module 27",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 27</h2>
+        <p><small>ID: 27-module27</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "28-module28",
+  name: "Module 28",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 28</h2>
+        <p><small>ID: 28-module28</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "29-module29",
+  name: "Module 29",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 29</h2>
+        <p><small>ID: 29-module29</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "30-module30",
+  name: "Module 30",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 30</h2>
+        <p><small>ID: 30-module30</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "31-module31",
+  name: "Module 31",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 31</h2>
+        <p><small>ID: 31-module31</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "32-module32",
+  name: "Module 32",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 32</h2>
+        <p><small>ID: 32-module32</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "33-module33",
+  name: "Module 33",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 33</h2>
+        <p><small>ID: 33-module33</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "34-module34",
+  name: "Module 34",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 34</h2>
+        <p><small>ID: 34-module34</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "35-module35",
+  name: "Module 35",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 35</h2>
+        <p><small>ID: 35-module35</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "36-module36",
+  name: "Module 36",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 36</h2>
+        <p><small>ID: 36-module36</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "37-module37",
+  name: "Module 37",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 37</h2>
+        <p><small>ID: 37-module37</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "38-module38",
+  name: "Module 38",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 38</h2>
+        <p><small>ID: 38-module38</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "39-module39",
+  name: "Module 39",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 39</h2>
+        <p><small>ID: 39-module39</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "40-module40",
+  name: "Module 40",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 40</h2>
+        <p><small>ID: 40-module40</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "41-module41",
+  name: "Module 41",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 41</h2>
+        <p><small>ID: 41-module41</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "42-module42",
+  name: "Module 42",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 42</h2>
+        <p><small>ID: 42-module42</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "43-module43",
+  name: "Module 43",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 43</h2>
+        <p><small>ID: 43-module43</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "44-module44",
+  name: "Module 44",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 44</h2>
+        <p><small>ID: 44-module44</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "45-module45",
+  name: "Module 45",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 45</h2>
+        <p><small>ID: 45-module45</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "46-module46",
+  name: "Module 46",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 46</h2>
+        <p><small>ID: 46-module46</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "47-module47",
+  name: "Module 47",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 47</h2>
+        <p><small>ID: 47-module47</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "48-module48",
+  name: "Module 48",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 48</h2>
+        <p><small>ID: 48-module48</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "49-module49",
+  name: "Module 49",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 49</h2>
+        <p><small>ID: 49-module49</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "50-module50",
+  name: "Module 50",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 50</h2>
+        <p><small>ID: 50-module50</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "51-module51",
+  name: "Module 51",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 51</h2>
+        <p><small>ID: 51-module51</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "52-module52",
+  name: "Module 52",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 52</h2>
+        <p><small>ID: 52-module52</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "53-module53",
+  name: "Module 53",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 53</h2>
+        <p><small>ID: 53-module53</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "54-module54",
+  name: "Module 54",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 54</h2>
+        <p><small>ID: 54-module54</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "55-module55",
+  name: "Module 55",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 55</h2>
+        <p><small>ID: 55-module55</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
+export default {
+  id: "56-module56",
+  name: "Module 56",
+  render(el){
+    el.innerHTML = `
+      <div class="card">
+        <h2>🧩 Module 56</h2>
+        <p><small>ID: 56-module56</small></p>
+        <p>Placeholder UI. Wire in module-specific logic and API calls here.</p>
+        <button id="backToModules">↩ Back to Modules</button>
+      </div>`;
+    el.querySelector('#backToModules').onclick = ()=> location.hash = '#/modules';
+  }
+};
