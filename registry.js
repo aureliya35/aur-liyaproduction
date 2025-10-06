@@ -123,3 +123,13 @@ export const Registry = {
   get(id){ return this._all[id]; },
   list(){ return Object.values(this._all); }
 };
+import mod01 from './modules/01-trustos.js';
+import mod03 from './modules/03-mirrorme.js';
+// …import the rest as you build them
+
+export const MODULES = [
+  mod01,
+  // add 02 when you build it
+  mod03
+  // …
+];
