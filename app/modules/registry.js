@@ -1,4 +1,8 @@
 import m01 from './01-trustos.js';
+import mod01 from './01-trustos.js';
+export const _all = { [mod01.id]: mod01 };
+export const get = (id) => _all[id];
+export const list = () => Object.values(_all);
 import m02 from './02-sovereignwealth.js';
 import m03 from './03-mirrorme.js';
 import m04 from './04-boardroomaccess.js';
