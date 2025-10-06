@@ -1,3 +1,32 @@
+# Auréliya SPA — Working Demo (56 modules + API routes)
+
+This is a **working** Vercel app:
+- SPA front-end with 56 module routes
+- Live API routes under `/api`
+
+## Included API routes
+- `GET /api/ping` → `{ ok: true }`
+- `GET /api/time` → `{ time: "ISO" }`
+- `POST /api/echo` with JSON body → echoes back
+- `POST /api/openai` with `{prompt}` →
+  - If `OPENAI_API_KEY` is set in Vercel → returns model output
+  - If not → returns a safe mock reply (still functional)
+
+## Wired modules
+- **TrustOS** → calls `/api/time`
+- **SovereignWealth** → calls `/api/ping`
+- **MirrorMe** → sends JSON to `/api/echo`
+- **Boardroom Access** → calls `/api/openai`
+
+## Deploy on Vercel
+1. Push this folder to your GitHub repo and connect it to Vercel.
+2. Project Settings → Build & Output:
+   - Framework Preset: **Other**
+   - Build Command: *(leave empty)*
+   - Output directory: `/` (root)
+3. (Optional) Add `OPENAI_API_KEY` in Vercel → Settings → Environment Variables.
+
+Open your site → **Modules** → try TrustOS, SovereignWealth, MirrorMe, Boardroom.
 # aur-liyaproduction
 this should be the real app hopefully 
 # Sentience‑Like Protocol v0.1 (Research Draft)
