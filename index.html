@@ -225,6 +225,12 @@
 
     renderHeader();
     startRouter();
-  </script>
+  <script type="module">
+  import { renderHeader } from './app/ui/header.js';
+  import { startRouter } from './app/router.js';
+  import * as Registry from './app/modules/registry.js';
+  renderHeader(document.getElementById('hdr') || document.body.appendChild(Object.assign(document.createElement('header'),{id:'hdr'})));
+  startRouter(document.getElementById('main') || document.body.appendChild(Object.assign(document.createElement('main'),{id:'main'})), Registry);
+</script>
 </body>
 </html>
