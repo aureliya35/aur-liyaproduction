@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auréliya Sovereign AI System</title>
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #432889, #9e85d4);
+      color: white;
+    }
+    .vercel-header {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: rgba(0,0,0,0.3);
+      padding: 12px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+    .vercel-header button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .vercel-home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding-top: 60px;
+    }
+    .gold-halo {
+      width: 200px;
+      height: 200px;
+      border: 4px solid gold;
+      border-radius: 50%;
+      margin: 20px;
+      box-shadow: 0 0 20px gold;
+    }
+    .welcome-text {
+      font-size: 2rem;
+      margin: 20px 0;
+    }
+    .module-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .module-icons button {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .module-icons button:hover {
+      background: rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="vercel-header">
+    <button onclick="navigateTo('home')">🏠 Home</button>
+    <button onclick="navigateTo('modules')">🧩 Modules</button>
+    <button onclick="navigateTo('trust')">🔐 Trust</button>
+    <button onclick="navigateTo('settings')">⚙️ Settings</button>
+    <button onclick="navigateTo('files')">📁 Files</button>
+  </div>
+
+  <div class="vercel-home">
+    <div class="gold-halo"></div>
+    <h1 class="welcome-text">Welcome back, Sabrina ✨</h1>
+
+    <div class="module-icons">
+      <button onclick="navigateTo('trust')">🔐 TrustOS</button>
+      <button onclick="navigateTo('sovereign')">💰 SovereignWealth</button>
+      <button onclick="navigateTo('mirror')">🪞 MirrorMe</button>
+      <button onclick="navigateTo('boardroom')">🏛️ Boardroom Access</button>
+      <button onclick="navigateTo('air')">✈️ Auréliya Air</button>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(target) {
+      alert("Navigating to " + target + " (placeholder).");
+      // You can later replace this with real module router logic
+    }
+  </script>
+</body>
+</html>
