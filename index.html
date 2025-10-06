@@ -234,3 +234,31 @@
 </script>
 </body>
 </html>
+<!-- add somewhere in <body>: -->
+<header id="hdr"></header>
+<main id="main"></main>
+
+<script type="module">
+  // Show fatal JS errors on the page (handy on iPhone)
+  window.addEventListener('error', e=>{
+    const pre=document.createElement('pre');
+    pre.textContent='Error: '+e.message;
+    document.body.prepend(pre);
+  });
+  window.addEventListener('unhandledrejection', e=>{
+    const pre=document.createElement('pre');
+    pre.textContent='Promise Rejection: '+(e.reason?.message||e.reason);
+    document.body.prepend(pre);
+  });
+
+  // IMPORTANT: paths match your repo layout
+  import { renderHeader } from './app/ui/header.js';
+  import { startRouter } from './app/ui/router.js';
+  import { Registry } from './app/modules/registry.js';
+
+  const hdr  = document.getElementById('hdr');
+  const main = document.getElementById('main');
+
+  renderHeader(hdr, Registry);        // draws the top nav
+  startRouter(main, Registry);        // boots the SPA router
+</script>
